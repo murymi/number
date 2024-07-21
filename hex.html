@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            color: black;
+            font-family: ubuntu;
+        }
+        input{
+            width: 600px;
+            height: 70px;
+            padding: 5px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <h2>Hex</h2>
+    <input type="text" id="hexinp">
+    <h2>Binary</h2>
+    <input type="text" id="bininp">
+    <h2>Octal</h2>
+    <input type="text" id="octinp">
+    <h2>Decimal</h2>
+    <input type="text" id="decinp">
+    <script type="text/javascript">
+
+        const inputs = [
+            document.getElementById("decinp"),
+            document.getElementById("hexinp"),
+            document.getElementById("octinp"),
+            document.getElementById("bininp")
+        ]
+
+        inputs.forEach((input) => {
+            input.addEventListener("input", (event) => {
+                const id = event.target.getAttribute("id");
+                const input = event.target.value;
+                var value = (() => {
+                    switch (id) {
+                        case "decinp":
+                            return parseInt(input, 10);
+                        case "hexinp":
+                            return parseInt(input, 16);
+                        case "octinp":
+                            return parseInt(input, 8);
+                        case "bininp":
+                            return parseInt(input, 2);
+                        default:
+                            return 0
+                    }
+                })();
+                if(isNaN(value)) value = 0;
+                inputs.filter((v) => {
+                    return v.getAttribute("id") != id
+                }).forEach((elem) => {
+                    const output = (() => {
+                        switch (elem.getAttribute("id")) {
+                            case "decinp":
+                                return value.toString(10);
+                            case "hexinp":
+                                return "0x" + value.toString(16);
+                            case "octinp":
+                                return value.toString(8);
+                            case "bininp":
+                                return value.toString(2);
+                            default:
+                            // unreachable
+                        }
+                    })();
+                    elem.value = output;
+                })
+            }
+            )
+        })
+    </script>
+</body>
+</html>
